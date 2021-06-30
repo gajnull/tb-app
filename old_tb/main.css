@@ -1,0 +1,168 @@
+html,
+body {
+    height: 100%;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    padding: 0 4px;
+    background-color: beige;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+
+
+/*******************************************/
+/************** СТРАНИЦЫ *******************/
+
+.page {
+    //border: 0.5px solid darkkhaki;
+    flex: 1 0 100px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+
+/*****   top   *****/
+
+.page>.top {
+    font-size: 1em;
+    margin: 2px 4px;
+    padding: 5px;
+    border: 0.5px solid darkkhaki;
+    border-radius: 3px;
+    background-color: wheat;
+    overflow-x: auto;
+    /* scroll; */
+}
+
+
+/*   #page-list.page>.top {
+    word-wrap: break-word;
+  } */
+
+#page-find.page>input {
+    font-size: 1.1em;
+    width: auto;
+    border-radius: 0;
+    /* overflow-x: scroll;   maybe this need  */
+}
+
+
+/*****   main   *****/
+
+.main {
+    flex: 1 0 auto;
+    //margin: 0 2px 2px 2px;
+    padding: 3px;
+    border: 0.5px solid darkkhaki;
+    border-radius: 3px;
+}
+
+#page-list>.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-style: none;
+    //margin: 0px;
+}
+
+#page-list>.main>.ticket {
+    width: 30%;
+    margin: 2px;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+    border: 0.5px solid darkkhaki;
+    background-color: #E8E8D1;
+    color: #404000;
+    font-size: 1.1em;
+}
+
+#page-list>.main>.ticket[act] {
+    border: 1px solid darkkhaki;
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: olive;
+    color: beige;
+}
+
+#page-find>.main {
+  height: 70%;
+  overflow-y: scroll;
+}
+
+/* #page-find>.main>div {
+  height:100%;
+  overflow-y: scroll;
+}
+ */
+  #page-find>.main [ticket] {
+    border: 0.5px solid darkkhaki;
+  } 
+
+  #page-find>.main [act] {
+    background-color: olive;
+    color: beige;
+  }
+  
+  #page-find>.main .findAnswer {
+    font-style: italic;
+  }  
+
+
+  
+#page-ticket>.main {
+  height: 70%;
+  overflow-y: scroll;
+}
+
+#page-ticket>.main>div {
+  height:100%;
+  overflow-y: scroll;
+}
+
+  #page-ticket>.main .headTicket {
+    background-color: olive;
+    color: beige;
+  }  
+
+  #page-ticket>.main .border {
+    border: 0.5px solid darkkhaki;
+  }   
+
+  #page-ticket>.main .question {
+    font-weight: bold;
+  }
+
+  #page-ticket>.main .answer.act {
+    background-color: wheat;
+  }   
+
+
+/*******************************************/
+/************** КНОПКИ *******************/
+
+#btns {
+    display: flex;
+}
+
+#btns .btn {
+    flex: 1 0 auto;
+    text-align: center;
+    margin: 3px 2px;
+    padding: 5px;
+    font-size: 1.1em;
+    border: 0.5px solid darkslategray;
+    border-radius: 3px;
+    background-color: teal;
+    color: beige;
+}
+
+#btns .btn[act] {
+    background-color: mediumturquoise;
+    color: darkslategray;
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Охрана труда</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" media="screen" href="reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />   
+    <link rel="apple-touch-icon" sizes="120x120" href="/ot120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/ot152.png">    
+</head>
+
+<body>
+    <div id="page-list" class="page">
+        <div class="top">&nbsp</div>
+        <div class="main">
+            <div class="ticket" ticket="1">Билет 1</div>
+            <div class="ticket" ticket="2">Билет 2</div>
+            <div class="ticket" ticket="3">Билет 3</div>
+            <div class="ticket" ticket="4">Билет 4</div>
+            <div class="ticket" ticket="5">Билет 5</div>
+            <div class="ticket" ticket="6">Билет 6</div>
+            <div class="ticket" ticket="7">Билет 7</div>
+            <div class="ticket" ticket="8">Билет 8</div>
+            <div class="ticket" ticket="9">Билет 9</div>
+            <div class="ticket" ticket="10">Билет 10</div>
+            <div class="ticket" ticket="11">Билет 11</div>
+            <div class="ticket" ticket="12">Билет 12</div>
+            <div class="ticket" ticket="13">Билет 13</div>
+            <div class="ticket" ticket="14">Билет 14</div>
+            <div class="ticket" ticket="15">Билет 15</div>
+        </div>
+    </div>
+    <div id="page-find" class="page" hidden>
+        <input class="top" placeholder="Введите шаблон поиска">
+        <div class="main"></div>
+    </div>
+    <div id="page-ticket" class="page" hidden>
+        <div class="top">&nbsp</div>
+        <div class="main"></div>
+    </div>
+
+    <div id="btns">
+        <button class="btn" page="page-list" act>Список</button>
+        <button class="btn" page="page-find">Поиск</button>
+        <button class="btn" page="page-ticket">Билет</button>
+    </div>
+</body>
+
+<script src="data.js"></script>
+<script>
+    var state = {
+            ticket: 0,
+            view: "page-list",
+            template: ""
+        },
+        model = {
+            getAnswers: function(t) {
+                if (0 == t) return "";
+                for (var a = "", e = data[t - 1].items, i = 0; i < e.length; i++) {
+                    var n = e[i];
+                    a = a + n.q + n.a.replace(/\)$/, "") + ","
+                }
+                return a.replace(/,$/, "")
+            },
+            getCurrentAnswers: function() {
+                return model.getAnswers(state.ticket)
+            },
+            getSuitableTickets: function() {
+                var t = state.template;
+                t = t.replace("+", ".+");
+                for (var a = [], e = new RegExp(t, "i"), i = 0; i < 15; i++)
+                    for (var n = data[i].items, q = +data[i].t, x = 0; x < n.length; x++) {
+                        var r = n[x].txt;
+                        if (e.test(r)) {
+                            for (var c = n[x].a, s = +n[x].q, o = "", u = 0; u < n[x].aa.length; u++) c == n[x].aa[u][0] && (o = n[x].aa[u][1]);
+                            a.push({
+                                t: q,
+                                q: s,
+                                txt: r,
+                                a: c,
+                                answer: o
+                            })
+                        }
+                    }
+                return a
+            }
+        },
+    v = {};
+    v.template = document.querySelector("#page-find>input.top"), v.answerList = document.querySelector("#page-list>.top"), v.answerTicket = document.querySelector("#page-ticket>.top"), v.mainList = document.querySelector("#page-list>.main"), v.mainFind = document.querySelector("#page-find>.main"), v.mainTicket = document.querySelector("#page-ticket>.main"), v.btns = document.getElementById("btns"), v.btns.onclick = function(t) {
+        var a = t.target;
+        if (a.classList.contains("btn") && !a.hasAttribute("act")) {
+            for (var e = document.querySelectorAll("#btns .btn"), i = 0; i < e.length; i++) e[i].removeAttribute("act");
+            a.setAttribute("act", "");
+            var n = a.getAttribute("page");
+            v.setPage(n)
+        }
+    }, v.setPage = function(t) {
+        var a = document.getElementById(state.view),
+            e = document.getElementById(t);
+        switch (a.setAttribute("hidden", ""), e.removeAttribute("hidden"), t) {
+            case "page-list":
+                v.goList();
+                break;
+            case "page-find":
+                v.goFind();
+                break;
+            case "page-ticket":
+                v.goTicket()
+        }
+        state.view = t
+    }, v.goList = function() {
+        for (var t = document.querySelectorAll("#page-list .ticket"), a = 0; a < t.length; a++) {
+            var e = t[a];
+            e.removeAttribute("act"), +e.getAttribute("ticket") == state.ticket && e.setAttribute("act", "")
+        }
+        v.answerList.innerHTML = model.getCurrentAnswers()
+    }, v.mainList.onclick = function(t) {
+        var a = t.target;
+        if (a.classList.contains("ticket") && !a.hasAttribute("act")) {
+            var e = +a.getAttribute("ticket");
+            state.ticket = e, v.goList()
+        }
+    }, v.template.onkeypress = function(t) {
+        v.template.value = v.template.value.toLowerCase(), 13 == t.keyCode && (state.template = v.template.value, v.goFind())
+    }, v.answerTicket.onclick = function() {
+        v.btns.setAttribute("hidden", ""), v.answerTicket.setAttribute("hidden", "")
+    }, v.mainFind.onclick = function(t) {
+        var a = t.target.parentNode;
+        if (a.hasAttribute("ticket")) {
+            var e = +a.getAttribute("ticket");
+            state.ticket = e;
+            var i = v.mainFind.querySelector("[act]");
+            i && (i.removeAttribute("act"), i.querySelector(".findAnswer").setAttribute("hidden", "")), a.setAttribute("act", ""), a.querySelector(".findAnswer").removeAttribute("hidden", "")
+        }
+    }, v.goFind = function() {
+        "" != state.template && (v.template.innerHTML = state.template, v.mainFind.innerHTML = v.getHtmlSuitableTickets())
+    }, v.getHtmlSuitableTickets = function() {
+        for (var t = model.getSuitableTickets(), a = "", e = 0; e < t.length; e++) a += '<div ticket="' + t[e].t + '"><p class="findTicket">' + t[e].q + "." + t[e].txt + " - " + t[e].a + '</p>\n<p class="findAnswer" hidden>' + t[e].answer + "</p></div>\n";
+        return a
+    }, v.goTicket = function() {
+        if (0 == state.ticket) return "";
+        v.answerTicket.innerHTML = model.getCurrentAnswers(), v.mainTicket.innerHTML = v.getHtmlCurrentTicket()
+    }, v.getHtmlCurrentTicket = function() {
+        if (0 == state.ticket) return "";
+        for (var t = '<p class="headTicket">БИЛЕТ №' + state.ticket + "</p>\n", a = data[state.ticket - 1].items, e = "", i = 0; i < a.length; i++) e += '<div class="border">', e += '<p class="question">' + a[i].q + "." + a[i].txt + "</p>\n", e += n(a[i]), e += "</div>";
+        return "<div>" + t + e + "</div>";
+
+        function n(t) {
+            for (var a = "", e = 0; e < t.aa.length; e++) a += '<p class="answer' + (t.aa[e][0] == t.a ? " act" : "") + '">&nbsp' + t.aa[e][0] + "&nbsp" + t.aa[e][1] + "</p>";
+            return a
+        }
+    }, v.mainTicket.onclick = function(t) {
+        var a = document.documentElement.clientWidth,
+            e = document.documentElement.clientHeight;
+        v.btns.removeAttribute("hidden"), v.answerTicket.removeAttribute("hidden"), t.clientY > 2 * e / 3 || t.clientY < 1 * e / 3 || (t.clientX > 7 * a / 8 && state.ticket < 15 && (state.ticket++, v.goTicket()), t.clientX < 1 * a / 8 && state.ticket > 1 && (state.ticket--, v.goTicket()))
+    };
+</script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            // Registration was successful
+            //console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(function(err) {
+            // registration failed :(
+            //console.log('ServiceWorker registration failed: ', err);
+        });
+    }
+</script>
+
+</html>

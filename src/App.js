@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import Page from 'kit/Page';
+
+import Home from './components/Home';
+import Search from './components/Search';
+import Ticket from './components/Ticket';
+
+export default function App() {
+  const [page, setPage] = useState('home');
+  // const [ticket, setTicket] = useState(0);  // такого билета нет
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Page>
+      {
+        page === 'home' ? <Home setPage={setPage} /> :
+        page === 'search' ? <Search setPage={setPage} /> :
+        page === 'ticket' ? <Ticket setPage={setPage} /> :
+        <Home setPage={setPage} />
+      }
+    </Page>
   );
 }
 
-export default App;
+

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Ot App",
+  "name": "Ot App",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,14 +8,24 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logos/ot64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "logos/ot128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },    
+    {
+      "src": "logos/ot192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logos/ot256.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "256x256"
     }
   ],
   "start_url": ".",
