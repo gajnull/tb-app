@@ -1,34 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Content } from 'kit/Page';
 import { Paper } from 'kit/Paper';
 //import IconButton from 'kit/IconButton';
 
-import data from '../data';
+import {
+  /* color,*/ elevation, fonts, wnd
+} from './commons/basics'; 
+
+import data from 'api/data';
 
 const HomeContent = styled(Content)`
   width: 30%;
+  margin: 8px auto;
+  flex-flow: row wrap;
+  align-items: flex-stretch;
 `;
 
 const GridItem = styled(Paper)`
   width: 30%;
+  ${elevation[6]}
+  ${wnd.contentCenter}
+  padding: 4px;
+`;
+
+const CenteredItem = styled.div`
+  ${fonts.h6}
 `;
 
 
 export default function HomeGrid({ showTicket }) {
-  //const [level, setLevel] = useState('grid');
-  
-  //const toogleLevel = () => setLevel(level === 'grid' ? 'list' : 'grid');
-  
   return (
     <HomeContent>
-      <GridItem>
-
-      </GridItem>
+      {
+        data.map(item => (
+          <GridItem 
+            key={item.t}
+            onClick={()=>showTicket(item)}
+          >
+            <CenteredItem>Билет № {item.t}</CenteredItem>            
+          </GridItem>
+        ))
+      }
     </HomeContent>  
-  ); 
-}
+  );
+}; 
+
 
 
 
